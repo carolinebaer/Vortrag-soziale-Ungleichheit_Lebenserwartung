@@ -12,20 +12,66 @@
 \usepackage{lmodern}
 \usepackage{pifont}
 \usepackage{hyperref}
+\usepackage{xcolor}
 
 
 %Navigationsleiste verschwinden lassen
 \beamertemplatenavigationsymbolsempty
 
 % \logo{\includegraphics[height= 0.5 cm]{Franz}}
-\title[Soziale Ungleichheit in der Lebenserwartung]{Soziale Ungleichheit der Lebenserwartung in Deutschland}
+\title[Soziale Ungleichheit in der Lebenserwartung]{\textbf{Soziale Ungleichheit der Lebenserwartung in Deutschland}}
 %\institute{wissenschaftliches Arbeiten, TU Dortmund}
 \author{Caroline Baer, Louisa Poggel}
 \date{07. Dezember 2021}
 
+
 \usetheme{CambridgeUS}
 \usecolortheme{dolphin} %oder beaver oder crane (update 27.11, 13:29)
 \useinnertheme{rounded}
+
+\usepackage{tikz}
+\definecolor{pbbg}{RGB}{90,90,90}% filling color for the progress bar
+\definecolor{pbfill}{RGB}{90,90,90}% background color for the progress bar
+
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\paperwidth
+\progressbar@pbht=0.5ex
+% the progress bar
+\def\progressbar@progressbar{%
+    \progressbar@tmpcounta= \insertframenumber % max = ?
+    \progressbar@tmpcountb=\inserttotalframenumber      
+    \progressbar@tmpdim=.5\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+    \progressbar@tmpdim=2\progressbar@tmpdim
+  \begin{tikzpicture}[rounded corners=1.5pt,very thin]
+  \shade[top color=pbbg!20,bottom color=pbbg!20,middle color=pbbg!50]
+       (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+
+       \shade[draw=pbfill,top color=pbfill!50,bottom color=pbfill!50,middle color=pbfill] %
+         (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \draw[color=normal text.fg!50]
+      (0pt, 0pt) rectangle (\progressbar@pbwd, \progressbar@pbht)
+        node[pos=0.5,color=normal text.fg] {\textnormal{%
+        }%
+    };
+  \end{tikzpicture}%
+}
+\addtobeamertemplate{footline}  %---footline für unten (über lila Balken)------
+%---------und headline für oben (über lila Balken)-----------------------------
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.0ex,center,dp=0ex]{white}%
+    \progressbar@progressbar%
+  \end{beamercolorbox}%
+}
+\makeatother  
+
 
 \begin{document}
 
